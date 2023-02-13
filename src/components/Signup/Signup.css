@@ -1,0 +1,14 @@
+.signup-container {
+    background-color: rgb(235, 233, 233);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+    font-size: 1.25rem;
+}
+
+@media only screen and (min-width:780px) {
+    .signup-container {
+        width: 50%;
+        margin: auto;
+    }
+}

@@ -1,0 +1,16 @@
+.display-profile {
+    background-color: rgb(236, 236, 241);
+    padding: 10px;
+    margin: auto 10px;
+}
+
+.display-profile button {
+    margin-left: 10px;
+}
+
+@media only screen and (min-width:780px) {
+    .display-profile {
+        width: 50%;
+        margin: auto;
+    }
+}

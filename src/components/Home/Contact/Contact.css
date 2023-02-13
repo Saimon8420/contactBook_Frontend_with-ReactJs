@@ -1,0 +1,68 @@
+/* Display contact */
+.display-contact {
+    background-color: rgb(235, 233, 233);
+    margin: -30px 10px 10px 10px;
+}
+
+.each-user {
+    background-color: white;
+    width: 70%;
+    margin: 5px auto;
+    border-radius: 5px;
+}
+
+.contact-table {
+    margin-top: -30px;
+    padding: 5px;
+}
+
+.contact-table .each-user,
+button {
+    background-color: rgb(21, 101, 192);
+    border: none;
+    color: white;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.contact-table button:hover {
+    background-color: rgb(25, 110, 210);
+}
+
+/* Create contact */
+.create-contact {
+    margin-top: -30px;
+    background-color: rgba(228, 228, 234, 0.687);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 1.25rem;
+}
+
+/* update contact */
+.update-contact {
+    margin-top: -10px;
+    background-color: rgba(228, 228, 234, 0.687);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+@media only screen and (max-width:580px) {
+    .contact-table {
+        display: none;
+    }
+}
+
+@media only screen and (min-width:581px) {
+    .each-user {
+        display: none;
+    }
+}
+
+@media only screen and (min-width:780px) {
+    .create-contact {
+        width: 50%;
+        margin: auto;
+    }
+}
