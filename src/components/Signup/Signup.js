@@ -47,6 +47,12 @@ const Signup = () => {
                 progress: undefined,
                 theme: "colored",
             });
+            setInputs({
+                name: '',
+                email: '',
+                password: '',
+                confirmPass: '',
+            });
             navigate("/login", { replace: true });
         }
     }, [user]);
@@ -67,17 +73,23 @@ const Signup = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        const { name, email, password, confirmPass } = inputs;
-        if (password === confirmPass) {
-            dispatch(signUp({ name, email, password }));
-            setInputs({
-                name: '',
-                email: '',
-                password: '',
-                confirmPass: '',
+        const { name, password, confirmPass, email } = inputs;
+        const checkNumber = (str) => {
+            return /^[0-9]+$/.test(str);
+        };
+        if (checkNumber(name) === true) {
+            toast.error("Name, can't set only number!", {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
             })
         }
-        else {
+        else if (password !== confirmPass) {
             toast.error("Password doesn't match", {
                 position: "top-right",
                 autoClose: 4000,
@@ -88,6 +100,9 @@ const Signup = () => {
                 progress: undefined,
                 theme: "colored",
             });
+        }
+        else {
+            dispatch(signUp({ name, email, password }));
         }
     };
 
@@ -111,6 +126,7 @@ const Signup = () => {
                                 margin="normal"
                                 fullWidth
                                 required
+                                placeholder='Latiful Kabir'
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -127,6 +143,7 @@ const Signup = () => {
                                 margin="normal"
                                 fullWidth
                                 required
+                                placeholder='latifulkabir567@gmail.com'
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -144,6 +161,7 @@ const Signup = () => {
                                 margin="normal"
                                 fullWidth
                                 required
+                                placeholder='********'
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -161,6 +179,7 @@ const Signup = () => {
                                 margin="normal"
                                 fullWidth
                                 required
+                                placeholder='********'
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">

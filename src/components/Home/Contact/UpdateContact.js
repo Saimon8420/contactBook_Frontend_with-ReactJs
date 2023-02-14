@@ -24,6 +24,12 @@ const UpdateContact = () => {
                 progress: undefined,
                 theme: "colored",
             });
+            setInputs({
+                name: "",
+                email: "",
+                address: "",
+                phone: ""
+            });
             navigate("/contact");
         }
         else {
@@ -46,10 +52,10 @@ const UpdateContact = () => {
     }, [message]);
 
     const [inputs, setInputs] = useState({
-        name: "",
-        email: "",
-        address: "",
-        phone: ""
+        name: curContact[0].name,
+        email: curContact[0].email,
+        address: curContact[0].address,
+        phone: "+" + curContact[0].phone
     });
 
     const handleChange = (event) => {
@@ -61,8 +67,14 @@ const UpdateContact = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let { name, email, address, phone } = inputs;
-        if (!name && !email && (!address || address === Number) && !phone) {
-            toast.error("Input any One field and then submit update", {
+        const checkNumber = (str) => {
+            return /^[0-9]+$/.test(str);
+        };
+        const checkAddress = (str) => {
+            return /^(?!^[0-9]*$)(?!.*@).*$/i.test(str);
+        }
+        if (checkAddress(address) !== true) {
+            toast.error("Provide a valid address!", {
                 position: "top-right",
                 autoClose: 4000,
                 hideProgressBar: false,
@@ -71,48 +83,26 @@ const UpdateContact = () => {
                 draggable: true,
                 progress: undefined,
                 theme: "colored",
-            });
+            })
+        }
+        else if (checkNumber(name) === true) {
+            toast.error("Name, can't set only number!", {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
         }
         else {
-            const checkNumber = (str) => {
-                return /^\d+$/.test(str);
-            }
-            if ((checkNumber(address) === true)) {
-                toast.error("Provide Valid Address", {
-                    position: "top-right",
-                    autoClose: 4000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-            }
-            else {
-                name = name || curContact[0].name;
-                email = email || curContact[0].email;
-                address = address || curContact[0].email;
-                phone = phone || curContact[0].phone;
-                dispatch(updateContact({ name, email, address, phone, _id: inputs._id = curContact[0]._id }));
-                setInputs({
-                    name: "",
-                    email: "",
-                    address: "",
-                    phone: ""
-                })
-            }
+            dispatch(updateContact({ name, email, address, phone, _id: inputs._id = curContact[0]._id }))
         }
     }
     return (
         <div className='update-contact'>
-            <div className='curr-contact'>
-                <h2><Contacts /> Current Contact Info</h2>
-                <p>Name:  {curContact[0]?.name}</p>
-                <p>Email: {curContact[0]?.email}</p>
-                <p>Phone: {curContact[0]?.phone}</p>
-                <p>Address: {curContact[0]?.address}</p>
-            </div>
             <h2><Contacts /> Set Update Info</h2>
             <form onSubmit={handleSubmit}>
                 <TextField
@@ -127,7 +117,6 @@ const UpdateContact = () => {
                     fullWidth
                     margin="normal"
                     placeholder='Enter name'
-                    // required
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -148,7 +137,6 @@ const UpdateContact = () => {
                     placeholder='Enter email'
                     value={inputs.email}
                     onChange={handleChange}
-                    // required
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -169,7 +157,6 @@ const UpdateContact = () => {
                     placeholder='Enter number'
                     value={inputs.phone}
                     onChange={handleChange}
-                    // required
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -190,7 +177,6 @@ const UpdateContact = () => {
                     placeholder='Enter address'
                     value={inputs.address}
                     onChange={handleChange}
-                    // required
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">

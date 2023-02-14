@@ -44,8 +44,9 @@ button {
     margin-top: -10px;
     background-color: rgba(228, 228, 234, 0.687);
     padding: 10px;
-    margin: 10px;
     border-radius: 5px;
+    margin: 10px;
+    font-size: 1.25rem;
 }
 
 @media only screen and (max-width:580px) {
@@ -62,6 +63,11 @@ button {
 
 @media only screen and (min-width:780px) {
     .create-contact {
+        width: 50%;
+        margin: auto;
+    }
+
+    .update-contact {
         width: 50%;
         margin: auto;
     }

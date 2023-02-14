@@ -43,6 +43,12 @@ const CreateContact = () => {
                     progress: undefined,
                     theme: "colored",
                 });
+                setInputs({
+                    name: "",
+                    email: "",
+                    address: "",
+                    phone: ""
+                })
             }
             setTimeout(() => {
                 dispatch(setStatus())
@@ -58,21 +64,15 @@ const CreateContact = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const { phone, address } = inputs;
+        const { name, address } = inputs;
         const checkNumber = (str) => {
             return /^[0-9]+$/.test(str);
+        };
+        const checkAddress = (str) => {
+            return /^(?!^[0-9]*$)(?!.*@).*$/i.test(str);
         }
-        if (checkNumber(address) !== true && checkNumber(phone) === true) {
-            dispatch(addContact(inputs));
-            setInputs({
-                name: "",
-                email: "",
-                address: "",
-                phone: ""
-            })
-        }
-        else {
-            toast.error("Please!Provide Valid Info", {
+        if (checkAddress(address) !== true) {
+            toast.error("Provide a valid address!", {
                 position: "top-right",
                 autoClose: 4000,
                 hideProgressBar: false,
@@ -81,10 +81,24 @@ const CreateContact = () => {
                 draggable: true,
                 progress: undefined,
                 theme: "colored",
-            });
+            })
+        }
+        else if (checkNumber(name) === true) {
+            toast.error("Name, can't set only number!", {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
+        }
+        else {
+            dispatch(addContact(inputs));
         }
     }
-
     return (
         <div className='create-contact'>
             <h2><Contacts /> Add New Contact</h2>
@@ -100,7 +114,7 @@ const CreateContact = () => {
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
-                    placeholder='Enter name'
+                    placeholder='Latiful Kabir'
                     required
                     InputProps={{
                         startAdornment: (
@@ -119,7 +133,7 @@ const CreateContact = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
-                    placeholder='Enter email'
+                    placeholder='latiful@gmail.com'
                     value={inputs.email}
                     onChange={handleChange}
                     required
@@ -140,7 +154,7 @@ const CreateContact = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
-                    placeholder='Enter number'
+                    placeholder='+8801957009796'
                     value={inputs.phone}
                     onChange={handleChange}
                     required
@@ -161,7 +175,7 @@ const CreateContact = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
-                    placeholder='Enter address'
+                    placeholder='Dhaka, Bangladesh'
                     value={inputs.address}
                     onChange={handleChange}
                     required
